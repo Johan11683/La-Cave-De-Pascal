@@ -1,0 +1,102 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as v;
+
+.hero {
+  position: relative;
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+    url('/wine-bottles.jpg') center/cover no-repeat;
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 20%, rgba(0, 0, 0, 0.2), transparent 60%);
+  pointer-events: none;
+}
+
+.content {
+  @include container;
+  position: relative;
+  padding: 60px 0 40px;
+  text-align: center;
+  z-index: 1;
+}
+
+/* ⬇️ remplace les tags par des classes */
+.title {
+  font-size: clamp(2.4rem, 5.6vw, 4.2rem);
+  line-height: 1.05;
+  margin: 0 0 8px;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+
+.subtitle {
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  opacity: 0.95;
+  margin: 0 0 8px;
+}
+
+.lead {
+  opacity: 0.9;
+  margin: 0 0 28px;
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.primary,
+.secondary {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.primary {
+  background: v.$accent;
+  color: v.$accent-contrast;
+  box-shadow: 0 10px 30px rgba(110, 35, 52, 0.45);
+}
+
+.secondary {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid v.$border;
+  color: #fff;
+}
+
+.ribbon {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  transform-origin: left bottom;
+  margin-top: 40px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    transform: none;
+  }
+}
+
+.pill {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid v.$border;
+
+  strong { display: block; font-weight: 700; }
+  span { opacity: .85; font-size: .95rem; }
+}

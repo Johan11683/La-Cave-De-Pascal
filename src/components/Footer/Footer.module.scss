@@ -1,0 +1,14 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as v;
+
+.footer {
+  border-top: 1px solid v.$border;
+  margin-top: 40px;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}

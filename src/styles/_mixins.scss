@@ -1,0 +1,13 @@
+@use './variables' as v;
+
+@mixin container {
+  width: min(100% - 2rem, v.$container);
+  margin-inline: auto;
+}
+
+@mixin card {
+  border-radius: v.$radius;
+  box-shadow: v.$shadow;
+  background: v.$surface;
+  backdrop-filter: blur(6px);
+}
