@@ -71,9 +71,9 @@
 }
 
 .secondary {
-  background: rgba(255,255,255,0.08);
+  background: v.$accent;
   border: 1px solid v.$border;
-  color: #fff;
+  color: v.$accent-contrast;
 }
 
 .ribbon {
