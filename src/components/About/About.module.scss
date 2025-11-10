@@ -2,31 +2,31 @@
 @use '../../styles/variables' as v;
 
 .about {
-  padding: 100px 0;
+  padding: v.$space-8 0;
 }
 
 .inner {
   @include container;
   display: grid;
   grid-template-columns: 50% 40%;
+  gap: v.$space-7;
   align-items: start;
-  gap: 60px;
-  margin: 0 auto;
   width: 90%;
+  margin: 0 auto;
 
-  @media (max-width: 1024px) {
+  @include md-down {
     grid-template-columns: 1fr;
-    gap: 40px;
     width: 95%;
+    gap: v.$space-6;
   }
 }
 
-/* --- Texte --- */
+/* Texte */
 .textBlock { max-width: 720px; justify-self: end; }
 
 .title {
   font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-  margin-bottom: 28px;
+  margin: 0 0 v.$space-5;
   font-weight: 800;
   color: v.$accent;
 }
@@ -34,46 +34,31 @@
 .content {
   line-height: 1.75;
 
-  p { margin: 0 0 16px; color: #222; }
-  strong { font-weight: 700; color: v.$accent; }
+  p { margin: 0 0 v.$space-3; color: v.$text; }
+  strong { color: v.$accent; }
 }
 
-/* --- Images --- */
-.images { display: flex; flex-direction: column; gap: 22px; }
+/* Images */
+.images { display: flex; flex-direction: column; gap: v.$space-3; }
 
 .row {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-  justify-content: flex-start;
+  display: flex; gap: v.$space-3; width: 100%; justify-content: flex-start;
 
-  @media (max-width: 1024px) {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  @include md-down { justify-content: center; flex-wrap: wrap; }
 }
 
-/* Carte image uniformisée : même cadre pour toutes */
+/* Vignettes uniformisées */
 .card {
   position: relative;
   flex: 1 1 0;
-  aspect-ratio: 16 / 10;   /* ✅ toutes les vignettes ont la même proportion */
+  aspect-ratio: 16 / 10;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
   transition: transform .25s ease, box-shadow .25s ease;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,.35);
-  }
+  &:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.35); }
 }
+.photo { object-fit: cover; }
 
-.photo {
-  object-fit: cover; /* couvre entièrement le cadre */
-}
-
-/* Mobile */
-@media (max-width: 1024px) {
-  .card { width: min(420px, 90%); }
-}
+@include md-down { .card { width: min(420px, 90%); } }

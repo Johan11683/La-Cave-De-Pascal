@@ -9,21 +9,34 @@ export default function About() {
         <div className={s.textBlock}>
           <h2 id="about-title" className={s.title}>Qui sommes-nous</h2>
           <div className={s.content}>
-            <p>
-              Située au cœur du Bouscat, aux portes de Bordeaux, <strong>La Cave de Pascal</strong> est bien plus
-              qu’une simple cave à vin. C’est un lieu de passion, de partage et d’expertise où chaque bouteille
-              raconte une histoire.
-            </p>
-            <p>
-              Depuis notre ouverture, nous nous sommes engagés à proposer une <strong>sélection minutieuse</strong> de vins
-              d’exception, issus des meilleurs terroirs français et internationaux. Notre connaissance approfondie de
-              chaque cuvée nous permet de vous offrir des <strong>conseils parfaitement adaptés</strong> à vos goûts et à vos
-              occasions.
-            </p>
-            <p>
-              Que vous soyez amateur éclairé ou simple curieux, nous vous accueillons avec le même enthousiasme pour
-              vous faire découvrir des <strong>pépites viticoles</strong> et vous accompagner dans vos choix.
-            </p>
+         <p>
+  <strong>Pascal</strong>, c’est trente ans d’expérience, de passion et d’efforts. 
+  Il a bâti son parcours <strong>bouteille après bouteille</strong>, avec exigence et sincérité. 
+  Après avoir fondé <strong>La Cave de Villenave d’Ornon</strong> au début des années 2000, 
+  il ouvre en 2017 celle du <strong>Bouscat</strong> avec la même ambition : 
+  proposer des vins qui ont une âme.
+</p>
+
+<p>
+  Ici, on privilégie les <strong>vignerons indépendants</strong> aux grandes marques, 
+  les <strong>rencontres humaines</strong> aux catalogues impersonnels. 
+  Chaque cuvée est choisie <strong>directement chez le producteur</strong>, 
+  après dégustation, échange et conviction. 
+  On sélectionne avec soin, on conseille avec cœur.
+</p>
+
+<p>
+  Que tu sois <strong>curieux pressé</strong> ou <strong>amateur éclairé</strong>, 
+  on s’adapte à ton envie du moment : une <strong>bouteille pour l’apéro</strong>, 
+  un <strong>cadeau d’entreprise</strong> ou un <strong>grand cru pour une grande occassion</strong>. 
+  Ici, chacun trouve le vin qui lui ressemble.
+</p>
+
+<p>
+  <strong>La Cave de Pascal</strong>, c’est un lieu de <strong>partage</strong>, 
+  de <strong>confiance</strong> et de <strong>transmission</strong> où chaque conseil reflète le plaisir simple d’un vin bien choisi.
+</p>
+
           </div>
         </div>
 

@@ -1,102 +1,109 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
+/* ===== Section ===== */
 .hero {
   position: relative;
   min-height: 80vh;
   display: grid;
   place-items: center;
+  color: v.$accent-contrast;
+
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
-    url('/wine-bottles.jpg') center/cover no-repeat;
-  color: #fff;
+    linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.68)),
+    url('/wine-bottles.jpg') center / cover no-repeat;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(70% 60% at 50% 20%, rgba(0, 0, 0, 0.2), transparent 60%);
+  background: radial-gradient(70% 60% at 50% 20%, rgba(0,0,0,.18), transparent 60%);
   pointer-events: none;
 }
 
 .content {
   @include container;
   position: relative;
+  z-index: 1;
   padding: 60px 0 40px;
   text-align: center;
-  z-index: 1;
+
+  @include md-down { padding: 48px 0 32px; }
 }
 
-/* ⬇️ remplace les tags par des classes */
+/* ===== Typo ===== */
 .title {
+  margin: 0 0 8px;
   font-size: clamp(2.4rem, 5.6vw, 4.2rem);
   line-height: 1.05;
-  margin: 0 0 8px;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 24px rgba(0,0,0,.6);
 }
 
 .subtitle {
-  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-  opacity: 0.95;
   margin: 0 0 8px;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  opacity: .95;
 }
 
 .lead {
-  opacity: 0.9;
   margin: 0 0 28px;
   max-width: 60ch;
   margin-inline: auto;
+  opacity: .92;
 }
 
+/* ===== Actions (CTA) ===== */
 .actions {
   display: flex;
+  justify-content: center;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: center;
   margin-bottom: 36px;
 }
 
-.primary,
-.secondary {
+/* ✅ Style unique pour tous les boutons */
+.btn {
   display: inline-block;
   padding: 12px 18px;
   border-radius: 12px;
   font-weight: 700;
-}
-
-.primary {
   background: v.$accent;
   color: v.$accent-contrast;
-  box-shadow: 0 10px 30px rgba(110, 35, 52, 0.45);
+  box-shadow: 0 10px 24px rgba(110, 35, 52, 0.4);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(110, 35, 52, 0.5);
+  }
 }
 
-.secondary {
-  background: v.$accent;
-  border: 1px solid v.$border;
-  color: v.$accent-contrast;
-}
-
+/* ===== Ruban d’arguments ===== */
 .ribbon {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  transform-origin: left bottom;
   margin-top: 40px;
 
-  @media (max-width: 900px) {
+  @include md-down {
     grid-template-columns: 1fr;
-    transform: none;
   }
 }
 
 .pill {
-  @include card;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 6px;
   padding: 12px 14px;
-  border: 1px solid v.$border;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+  color: v.$accent-contrast;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
 
-  strong { display: block; font-weight: 700; }
-  span { opacity: .85; font-size: .95rem; }
+  strong { font-weight: 700; }
+  span   { opacity: .9; font-size: .95rem; }
 }

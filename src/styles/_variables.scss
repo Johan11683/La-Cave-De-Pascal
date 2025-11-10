@@ -1,10 +1,29 @@
+/* === Design Tokens === */
 $container: 1200px;
-$gap: 16px;
+$gutter: 16px;
 
-$radius: 14px;
+/* Palette */
+$accent: #6e2334;              /* Bordeaux – couleur marque */
+$accent-contrast: #ffffff;     /* Texte sur accent */
+$page-bg: #f3f5f7;             /* Fond page clair */
+$card-bg: #ffffff;             /* Fond de carte clair */
+
+$text: #222;                   /* Texte principal */
+$text-muted: #46515a;          /* Texte secondaire */
+$border: rgba(0,0,0,.12);      /* Bordures discrètes */
 $shadow: 0 10px 30px rgba(0,0,0,.25);
+$radius: 14px;
 
-$accent: #6e2334;
-$accent-contrast: #fff;
-$surface: rgba(255,255,255,.08);
-$border: rgba(255,255,255,.12);
+/* Échelles */
+$space-1: 8px;
+$space-2: 12px;
+$space-3: 16px;
+$space-4: 20px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 40px;
+$space-8: 60px;
+
+/* Breakpoints */
+$bp-md: 1024px;
+$bp-sm: 800px;

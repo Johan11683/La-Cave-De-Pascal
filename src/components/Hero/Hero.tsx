@@ -7,14 +7,13 @@ export default function Hero() {
 
       <div className={s.content}>
         <h1 className={s.title}>La Cave de Pascal</h1>
-        <p className={s.subtitle}>Votre caviste de confiance au Bouscat</p>
+        <p className={s.subtitle}>Votre caviste de confiance</p>
         <p className={s.lead}>
-          Sélection minutieuse, connaissance approfondie de la gamme et conseils parfaits
-          pour sublimer vos moments de dégustation.
+          Sélection minutieuse, connaissance approfondie de nos produits, conseils sur mesure, pour sublimer vos moments de dégustation.
         </p>
 
         <div className={s.actions}>
-          <a className={s.secondary} href="#contact">Nous contacter</a>
+          <a className={s.btn} href="#why">Pourquoi venir chez nous ?</a>
         </div>
 
         <div className={s.ribbon}>

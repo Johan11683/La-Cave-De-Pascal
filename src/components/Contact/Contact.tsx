@@ -4,8 +4,8 @@ export default function Contact() {
   return (
     <section id="contact" className={s.contact} aria-labelledby="contact-title">
       <div className={s.header}>
-        <h2 id="contact-title">Contactez-nous</h2>
-        <p>Venez nous rendre visite ou contactez-nous pour toute question. Nous serons ravis de vous conseiller.</p>
+        <h2 id="contact-title">Une question ?</h2>
+        <p>Venez nous rendre visite ou contactez-nous pour toute question. Nous serons ravis de vous aider !</p>
       </div>
 
       <div className={s.grid}>

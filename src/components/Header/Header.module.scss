@@ -2,11 +2,9 @@
 @use '../../styles/variables' as v;
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: sticky; top: 0; z-index: 50;
   backdrop-filter: blur(8px);
-  background: rgba(20, 20, 20, 0.6);
+  background: rgba(20,20,20,.6);
   border-bottom: 1px solid v.$border;
 }
 
@@ -21,33 +19,23 @@
 
 .brand {
   display: flex;
-  align-items: center;
+  align-items: center; 
   gap: 6px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  opacity: 0.95;
+  font-weight: 700; 
+  opacity: .95;
+  color : v.$accent-contrast;
+  font-size: clamp(1.5rem, 2vw, 1.4rem);
+
 }
 
 .nav {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
+  display: flex; justify-content: center; gap: 28px;
 
-  a {
-    opacity: 0.9;
-    transition: opacity 0.2s;
-  }
+  a { 
+    color : v.$accent-contrast;
+    opacity: .9; transition: opacity .2s; }
   a:hover { opacity: 1; }
 }
 
 .actions { display: flex; justify-content: end; }
-
-.cta {
-  display: inline-block;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: v.$accent;
-  color: v.$accent-contrast;
-  font-weight: 700;
-  box-shadow: 0 6px 20px rgba(110, 35, 52, 0.35);
-}
+.cta { @include btn; padding: 10px 16px; border-radius: 999px; }

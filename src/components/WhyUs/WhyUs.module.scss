@@ -2,17 +2,14 @@
 @use '../../styles/variables' as v;
 
 .why {
-  padding: 100px 0;
-  background: v.$accent-contrast; // fond clair
+  padding: v.$space-8 0;
+  background: v.$accent-contrast;
   color: v.$accent;
 }
 
 .inner {
   @include container;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: v.$space-6;
 }
 
 .title {
@@ -25,48 +22,25 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px 48px;
+  gap: v.$space-4 v.$space-6;
   width: 100%;
   max-width: 900px;
 
-  @media (max-width: 800px) {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+  @include sm-down { grid-template-columns: 1fr; text-align: center; }
 }
 
 .item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  line-height: 1.6;
+  display: flex; align-items: flex-start; gap: v.$space-3; line-height: 1.6;
 
-  @media (max-width: 800px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  @include sm-down { flex-direction: column; align-items: center; }
 
-  h3 {
-    margin: 0 0 6px;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: v.$accent;
-  }
-
-  p {
-    margin: 0;
-    color: darken(v.$accent, 25%);
-  }
+  h3 { margin: 0 0 6px; font-size: 1.15rem; font-weight: 700; color: v.$accent; }
+  p  { margin: 0; color: v.$text-muted; }
 }
 
 .icon {
-  background: rgba(v.$accent, 0.08);
+  background: rgba(v.$accent,.08);
   color: v.$accent;
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-size: 1.6rem;
-  flex-shrink: 0;
+  width: 50px; height: 50px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 1.6rem; flex-shrink: 0;
 }

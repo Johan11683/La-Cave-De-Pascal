@@ -1,206 +1,125 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
-// === Palette dérivée ===
-// On reste fidèle à ta charte (accent bordeaux), mais on crée un environnement clair.
-$contact-bg: lighten(v.$accent-contrast, 8%); // #fff -> #f3f3f3 env.
-$card-bg: v.$accent-contrast; // fond des cartes
-$text-main: v.$accent; // textes bordeaux foncé
-$text-secondary: darken(v.$accent, 25%); // pour petits textes gris/bordeaux
+/* Palette dérivée locale (fond clair, texte chaud) */
+$bg: lighten(v.$accent-contrast, 8%);  // ~#f3f3f3
+$text-main: v.$accent;
+$text-secondary: darken(v.$accent, 25%);
 
 .contact {
-  background: $contact-bg;
-  padding: 80px 0;
-  border-top: 1px solid rgba(0,0,0,.04);
-  border-bottom: 1px solid rgba(0,0,0,.04);
-  color: $text-secondary; // ✅ texte lisible et chaud
+  background: $bg;
+  padding: v.$space-8 0;
+  border-block: 1px solid rgba(0,0,0,.04);
+  color: $text-secondary;
 }
 
 .header {
   @include container;
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: v.$space-4;
 
   h2 {
     margin: 0;
     font-size: clamp(1.8rem, 3.4vw, 2.4rem);
     font-weight: 800;
     color: $text-main;
-    text-shadow: 0 1px 3px rgba(0,0,0,.05); // léger relief
+    text-shadow: 0 1px 3px rgba(0,0,0,.05);
   }
 
-  p {
-    margin: 8px 0 0;
-    opacity: .9;
-  }
+  p { margin: 8px 0 0; opacity: .9; }
 }
 
 .grid {
   @include container;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  gap: v.$space-4;
   grid-template-areas:
     "coords form"
     "map    form";
 
-  @media (max-width: 1020px) {
+  @include md-down {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "coords"
-      "form"
-      "map";
+    grid-template-areas: "coords" "form" "map";
   }
 }
 
 .card {
-  background: $card-bg;
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: v.$radius;
-  box-shadow: v.$shadow;
-  padding: 22px;
-  color: $text-secondary; // ✅ texte visible sur fond blanc
+  @include card;
+  padding: v.$space-4;
+  color: $text-secondary;
+  background: v.$card-bg;
 }
 
 .cardTitle {
-  margin: 0 0 14px;
+  margin: 0 0 v.$space-3;
   font-size: 1.25rem;
   font-weight: 700;
   color: $text-main;
 }
 
-/* Placement */
+/* placement */
 .card:nth-of-type(1) { grid-area: coords; }
 .formCard            { grid-area: form;   }
 .card:nth-of-type(3) { grid-area: map;    }
 
-/* --- Coordonnées --- */
+/* Coordonnées */
 .list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 14px;
+  list-style: none; margin: 0; padding: 0; display: grid; gap: v.$space-3;
 
   li {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 12px;
-    align-items: start;
-    padding: 12px;
-    border-radius: 10px;
-    background: lighten($contact-bg, 2%);
-    color: $text-secondary;
+    display: grid; grid-template-columns: auto 1fr; gap: v.$space-2;
+    align-items: start; padding: v.$space-3; border-radius: 10px;
+    background: lighten($bg, 2%); color: $text-secondary;
 
-    strong { display: block; color: $text-main; }
+    strong { color: $text-main; }
     p { margin: 2px 0 0; opacity: .9; }
-    a { text-decoration: underline; color: $text-main; }
+    a { color: $text-main; text-decoration: underline; }
   }
 }
 
 .icon {
-  width: 36px; height: 36px;
-  display: grid; place-items: center;
-  border-radius: 10px;
-  background: rgba(v.$accent, .1);
-  color: $text-main;
+  width: 36px; height: 36px; display: grid; place-items: center;
+  border-radius: 10px; background: rgba(v.$accent,.1); color: $text-main;
 }
 
-/* --- Formulaire --- */
-.form {
-  display: grid;
-  gap: 14px;
-}
+/* Formulaire – textarea collé en bas, grande hauteur par défaut */
+.formCard { display: flex; flex-direction: column; height: 100%; }
+
+.form { display: flex; flex-direction: column; gap: v.$space-3; flex: 1; }
 
 .field {
-  display: grid;
-  gap: 6px;
+  display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;
 
-  label {
-    font-weight: 600;
-    color: $text-main;
+  label { font-weight: 600; color: $text-main; }
+
+  input, textarea {
+    width: 100%; border: 1px solid rgba(0,0,0,.12); border-radius: 10px;
+    padding: 12px 14px; background: lighten($bg, 4%); color: $text-secondary;
+    outline: none;
   }
 
-  input,
-textarea {
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, .12);
-  border-radius: 10px;
-  padding: 12px 14px;
-  background: lighten($contact-bg, 4%);
-  outline: none;
-  color: $text-secondary;
+  input:focus, textarea:focus { @include focus-ring(); background: #fff; }
+
+  textarea {
+    flex: 1; min-height: 280px; height: 280px; resize: vertical; line-height: 1.6;
+  }
 }
 
-input:focus,
-textarea:focus {
-  border-color: $text-main;
-  box-shadow: 0 0 0 3px rgba(v.$accent, .15);
-  background: #fff;
-}
+.actions { margin-top: auto; display: flex; justify-content: center; padding-top: v.$space-2; }
+.submit  { @include btn; }
 
-/* ✅ grande zone de texte par défaut + redimensionnable */
-textarea {
-  flex: 1;
-  min-height: 280px;   /* hauteur confortable */
-  height: 280px;
-  resize: vertical;    /* agrandissable uniquement vers le bas */
-  line-height: 1.6;
-}
-
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.submit {
-  display: inline-block;
-  padding: 12px 18px;
-  border-radius: 10px;
-  font-weight: 700;
-  background: $text-main;
-  color: v.$accent-contrast;
-  border: 0;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(v.$accent, .25);
-}
-
-/* --- Carte / Google Maps --- */
+/* Carte / Google Maps */
 .mapMock {
-  display: grid;
-  place-items: center;
-  gap: 10px;
-  height: 220px;
-  border-radius: 10px;
-  background: lighten($contact-bg, 3%);
-  border: 1px dashed rgba(v.$accent, .25);
-  text-align: center;
-  color: $text-main;
+  display: grid; place-items: center; gap: 10px; height: 220px;
+  border-radius: 10px; background: lighten($bg, 3%);
+  border: 1px dashed rgba(v.$accent,.25); text-align: center; color: $text-main;
 
   p { margin: 0; font-weight: 600; }
 }
-
 .pin {
-  width: 44px; height: 44px;
-  display: grid; place-items: center;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(v.$accent, .3);
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-  font-size: 20px;
-  color: $text-main;
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border-radius: 999px; background: #fff; border: 1px solid rgba(v.$accent,.3);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08); font-size: 20px; color: $text-main;
 }
-
-.mapBtn {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(v.$accent, .12);
-  color: $text-main;
-  font-weight: 700;
-  text-decoration: none;
-}
+.mapBtn { @include btn; background: rgba(v.$accent,.12); color: $text-main; box-shadow: none; }

@@ -1,13 +1,39 @@
 @use './variables' as v;
 
+/* Conteneur fluide */
 @mixin container {
   width: min(100% - 2rem, v.$container);
   margin-inline: auto;
 }
 
+/* Carte standard */
 @mixin card {
+  background: v.$card-bg;
+  border: 1px solid v.$border;
   border-radius: v.$radius;
   box-shadow: v.$shadow;
-  background: v.$surface;
-  backdrop-filter: blur(6px);
 }
+
+/* Bouton plein (accent) */
+@mixin btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  background: v.$accent;
+  color: v.$accent-contrast;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(110,35,52,.25);
+  text-decoration: none;
+}
+
+/* Focus ring accessible */
+@mixin focus-ring($color: v.$accent) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba($color, .18);
+}
+
+/* Media queries */
+@mixin md-down { @media (max-width: v.$bp-md) { @content; } }
+@mixin sm-down { @media (max-width: v.$bp-sm) { @content; } }

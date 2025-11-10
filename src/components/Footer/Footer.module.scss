@@ -2,11 +2,11 @@
 @use '../../styles/variables' as v;
 
 .footer {
-  background: v.$accent;           /* fond Bordeaux */
-  color: v.$accent-contrast;       /* texte blanc */
+  background: v.$accent;
+  color: v.$accent-contrast;
   width: 100%;
-  padding: 32px 0;                 /* hauteur */
-  margin-top: 80px;                /* espace avant */
+  padding: v.$space-6 0;
+  margin-top: v.$space-8;
 }
 
 .inner {
@@ -15,45 +15,26 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: v.$space-3;
   text-align: left;
 
-  @media (max-width: 900px) {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
-  }
+  @include md-down { flex-direction: column; text-align: center; gap: v.$space-2; }
 }
 
 .col {
-  flex: 1;
-  min-width: 220px;
+  flex: 1; min-width: 220px;
 
-  p {
-    margin: 4px 0;
-    font-size: 0.95rem;
-    opacity: 0.95;
-  }
+  p { margin: 4px 0; font-size: .95rem; opacity: .95; }
 }
+.brand { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
 
-.brand {
-  font-weight: 700;
-  font-size: 1.05rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ✅ correction de l’erreur : sélecteur scoped */
+/* scoped links (CSS Modules “pure selector”) */
 .footer a {
   color: v.$accent-contrast;
   text-decoration: none;
   font-weight: 500;
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
+  opacity: .9;
+  transition: opacity .2s ease;
 
-  &:hover {
-    opacity: 1;
-    text-decoration: underline;
-  }
+  &:hover { opacity: 1; text-decoration: underline; }
 }
