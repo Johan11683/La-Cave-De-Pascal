@@ -2,13 +2,58 @@
 @use '../../styles/variables' as v;
 
 .footer {
-  border-top: 1px solid v.$border;
-  margin-top: 40px;
+  background: v.$accent;           /* fond Bordeaux */
+  color: v.$accent-contrast;       /* texte blanc */
+  width: 100%;
+  padding: 32px 0;                 /* hauteur */
+  margin-top: 80px;                /* espace avant */
 }
 
 .inner {
   @include container;
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  text-align: left;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+}
+
+.col {
+  flex: 1;
+  min-width: 220px;
+
+  p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    opacity: 0.95;
+  }
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ✅ correction de l’erreur : sélecteur scoped */
+.footer a {
+  color: v.$accent-contrast;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
 }
