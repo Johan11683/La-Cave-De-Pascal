@@ -1,29 +1,59 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
+/* ========= Section ========= */
 .about {
   padding: v.$space-8 0;
 }
 
+/* ========= Layout en Flex (modulaire + centré) ========= */
 .inner {
+  /* ratios ajustables sans toucher au JSX */
+  --about-text: 0.55;   /* 55% texte */
+  --about-media: 0.45;  /* 45% images */
+
   @include container;
-  display: grid;
-  grid-template-columns: 50% 40%;
+  display: flex;
   gap: v.$space-7;
-  align-items: start;
-  width: 90%;
-  margin: 0 auto;
+
+  /* centrage du bloc texte+images */
+  justify-content: center;
+  align-items: center;
+
+  /* largeur maxi + centrage */
+  width: min(100% - 2rem, v.$container);
+  margin-inline: auto;
 
   @include md-down {
-    grid-template-columns: 1fr;
-    width: 95%;
+    flex-direction: column;
+    align-items: stretch;
     gap: v.$space-6;
   }
 }
 
-/* Texte */
-.textBlock { max-width: 720px; justify-self: end; }
+/* colonnes */
+.textBlock {
+  flex: 1 1 calc(var(--about-text) * 100%);
+  max-width: 720px;
+  align-self: center;
 
+  @include md-down {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}
+
+.media {
+  flex: 1 1 calc(var(--about-media) * 100%);
+  align-self: center;
+  min-width: 0; /* évite overflow en flex */
+
+  @include md-down {
+    flex-basis: 100%;
+  }
+}
+
+/* ========= Typo ========= */
 .title {
   font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   margin: 0 0 v.$space-5;
@@ -38,27 +68,39 @@
   strong { color: v.$accent; }
 }
 
-/* Images */
-.images { display: flex; flex-direction: column; gap: v.$space-3; }
+/* ========= Grille interne d’images ========= */
+.images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$space-3;
 
-.row {
-  display: flex; gap: v.$space-3; width: 100%; justify-content: flex-start;
-
-  @include md-down { justify-content: center; flex-wrap: wrap; }
+  @include md-down {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
 }
 
-/* Vignettes uniformisées */
+/* Cartes uniformisées : indispensables pour Image fill */
 .card {
-  position: relative;
-  flex: 1 1 0;
-  aspect-ratio: 16 / 10;
+  position: relative;       /* ✅ requis par <Image fill> */
+  width: 100%;
+  aspect-ratio: 16 / 10;    /* ✅ dimension stable */
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
   transition: transform .25s ease, box-shadow .25s ease;
 
-  &:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.35); }
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,.35);
+  }
 }
-.photo { object-fit: cover; }
 
-@include md-down { .card { width: min(420px, 90%); } }
+.photo {
+  object-fit: cover;        /* couvre entièrement la carte */
+}
+
+/* largeur max en mobile pour éviter l’effet géant */
+@include md-down {
+  .card { max-width: 520px; width: 100%; }
+}
