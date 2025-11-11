@@ -1,14 +1,73 @@
+'use client';
+
+import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import s from './Contact.module.scss';
 
 export default function Contact() {
+  const [status, setStatus] = useState<'idle'|'sending'|'ok'|'error'>('idle');
+  const [msg, setMsg] = useState<string>('');
+
+  const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === 'sending') return;
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    // Honeypot (doit rester vide)
+    if ((fd.get('website') as string)?.trim()) {
+      setStatus('ok'); // bot -> on fait comme si c'était OK
+      setMsg('Merci, votre message a été envoyé.');
+      form.reset();
+      return;
+    }
+
+    const payload = {
+      fullname: (fd.get('fullname') as string)?.trim(),
+      cave: (fd.get('cave') as string) || '',
+      email: (fd.get('email') as string)?.trim(),
+      phone: (fd.get('phone') as string)?.trim() || '',
+      message: (fd.get('message') as string)?.trim(),
+      // website inclus mais vide (honeypot)
+      website: (fd.get('website') as string) || '',
+    };
+
+    // mini validation côté client
+    if (!payload.fullname || !payload.email || !payload.message || !payload.cave) {
+      setStatus('error');
+      setMsg('Merci de remplir tous les champs obligatoires.');
+      return;
+    }
+
+    setStatus('sending');
+    setMsg('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json?.ok !== true) throw new Error(json?.error || 'SEND_FAILED');
+
+      setStatus('ok');
+      setMsg('Merci, votre message a bien été envoyé. Nous revenons vers vous rapidement.');
+      form.reset();
+    } catch (err) {
+      setStatus('error');
+      setMsg("Une erreur est survenue. Réessayez plus tard ou contactez-nous par téléphone.");
+      console.error(err);
+    }
+  }, [status]);
+
   return (
     <section id="contact" className={s.contact} aria-labelledby="contact-title">
       <div className={s.header}>
         <h2 id="contact-title">Une question ?</h2>
-        <p>
-          Venez nous rendre visite ou contactez-nous pour toute question. Nous serons ravis de vous aider !
-        </p>
+        <p>Venez nous rendre visite ou contactez-nous pour toute question. Nous serons ravis de vous aider !</p>
       </div>
 
       <div className={s.grid}>
@@ -27,9 +86,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>📞</span>
               <div>
                 <strong>Téléphone</strong>
-                <p>
-                  <a href="tel:0557104037">05 57 10 40 37</a>
-                </p>
+                <p><a href="tel:0557104037">05 57 10 40 37</a></p>
               </div>
             </li>
             <li>
@@ -43,9 +100,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>✉️</span>
               <div>
                 <strong>Email</strong>
-                <p>
-                  <a href="mailto:monard.johan@yahoo.fr">lacavedepascal@orange.fr</a>
-                </p>
+                <p><a href="mailto:lacavedepascal@orange.fr">lacavedepascal@orange.fr</a></p>
               </div>
             </li>
           </ul>
@@ -66,9 +121,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>📞</span>
               <div>
                 <strong>Téléphone</strong>
-                <p>
-                  <a href="tel:0556878702">05 56 87 87 02</a>
-                </p>
+                <p><a href="tel:0556878702">05 56 87 87 02</a></p>
               </div>
             </li>
             <li>
@@ -82,9 +135,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>✉️</span>
               <div>
                 <strong>Email</strong>
-                <p>
-                  <a href="mailto:monard.johan@yahoo.fr">lacavedepascal@neuf.fr</a>
-                </p>
+                <p><a href="mailto:lacavedepascal@neuf.fr">lacavedepascal@neuf.fr</a></p>
               </div>
             </li>
           </ul>
@@ -136,16 +187,13 @@ export default function Contact() {
         <article className={`${s.card} ${s.formCard}`} aria-labelledby="form-title">
           <h3 id="form-title" className={s.cardTitle}>Envoyez-nous un message</h3>
 
-          <form className={s.form} method="post" action="#">
+          <form className={s.form} onSubmit={onSubmit} noValidate>
+            {/* Honeypot (ne surtout pas afficher) */}
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ display: 'none' }} />
+
             <div className={s.field}>
               <label htmlFor="fullname">Nom complet *</label>
-              <input
-                id="fullname"
-                name="fullname"
-                type="text"
-                required
-                placeholder="Votre nom"
-              />
+              <input id="fullname" name="fullname" type="text" required placeholder="Votre nom" />
             </div>
 
             <div className={s.field}>
@@ -159,41 +207,29 @@ export default function Contact() {
 
             <div className={s.field}>
               <label htmlFor="email">Email *</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="votre@email.fr"
-              />
+              <input id="email" name="email" type="email" required placeholder="votre@email.fr" />
             </div>
 
             <div className={s.field}>
               <label htmlFor="phone">Téléphone</label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="06 XX XX XX XX"
-              />
+              <input id="phone" name="phone" type="tel" placeholder="06 XX XX XX XX" />
             </div>
 
             <div className={s.field}>
               <label htmlFor="message">Message *</label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                placeholder="Parlez-nous de vos besoins ou posez-nous vos questions..."
-              />
+              <textarea id="message" name="message" required rows={5} placeholder="Parlez-nous de vos besoins ou posez-nous vos questions..." />
             </div>
 
             <div className={s.actions}>
-              <button type="submit" className={s.submit}>
-                Envoyer le message
+              <button type="submit" className={s.submit} disabled={status === 'sending'}>
+                {status === 'sending' ? 'Envoi…' : 'Envoyer le message'}
               </button>
             </div>
+
+            {/* zone d’annonce accessible */}
+            <p aria-live="polite" style={{ textAlign: 'center', margin: '8px 0 0', minHeight: 20 }}>
+              {msg}
+            </p>
           </form>
         </article>
       </div>
