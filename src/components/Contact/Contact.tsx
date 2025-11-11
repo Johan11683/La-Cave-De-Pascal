@@ -44,7 +44,7 @@ export default function Contact() {
               <div>
                 <strong>Email</strong>
                 <p>
-                  <a href="mailto:lacavedepascal@orange.fr">lacavedepascal@orange.fr</a>
+                  <a href="mailto:monard.johan@yahoo.fr">lacavedepascal@orange.fr</a>
                 </p>
               </div>
             </li>
@@ -83,7 +83,7 @@ export default function Contact() {
               <div>
                 <strong>Email</strong>
                 <p>
-                  <a href="mailto:lacavedepascal@neuf.fr">lacavedepascal@neuf.fr</a>
+                  <a href="mailto:monard.johan@yahoo.fr">lacavedepascal@neuf.fr</a>
                 </p>
               </div>
             </li>
