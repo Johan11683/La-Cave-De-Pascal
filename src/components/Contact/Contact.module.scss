@@ -1,7 +1,7 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
-/* Palette dérivée locale (fond clair, texte chaud) */
+/* Palette locale */
 $bg: lighten(v.$accent-contrast, 8%);  // ~#f3f3f3
 $text-main: v.$accent;
 $text-secondary: darken(v.$accent, 25%);
@@ -29,18 +29,30 @@ $text-secondary: darken(v.$accent, 25%);
   p { margin: 8px 0 0; opacity: .9; }
 }
 
+/* ===== Grille 2 colonnes =====
+   L1: coords1 | coords2
+   L2: map1    | map2
+   L3: form    | form  (span 2 colonnes)
+*/
 .grid {
   @include container;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: v.$space-4;
+
   grid-template-areas:
-    "coords form"
-    "map    form";
+    "coords1 coords2"
+    "map1    map2"
+    "form    form";
 
   @include md-down {
     grid-template-columns: 1fr;
-    grid-template-areas: "coords" "form" "map";
+    grid-template-areas:
+      "coords1"
+      "coords2"
+      "map1"
+      "map2"
+      "form";
   }
 }
 
@@ -52,74 +64,210 @@ $text-secondary: darken(v.$accent, 25%);
 }
 
 .cardTitle {
-  margin: 0 0 v.$space-3;
-  font-size: 1.25rem;
+  margin: 0 0 v.$space-2; /* ⬅️ moins d’espace sous le titre */
+  font-size: 1.1rem;
   font-weight: 700;
   color: $text-main;
 }
 
-/* placement */
-.card:nth-of-type(1) { grid-area: coords; }
-.formCard            { grid-area: form;   }
-.card:nth-of-type(3) { grid-area: map;    }
+/* Zones */
+.coords1 { 
+  grid-area: coords1; 
+  padding: 16px 20px; /* ⬅️ réduit la hauteur perçue */
+}
+.coords2 { 
+  grid-area: coords2; 
+  padding: 16px 20px; /* ⬅️ idem */
+}
+.map1    { grid-area: map1; }
+.map2    { grid-area: map2; }
 
-/* Coordonnées */
+.formCard{
+  grid-area: form;
+  display: flex; 
+  flex-direction: column; 
+  height: 100%;
+}
+
+/* Contenus coord. (plus compacts) */
 .list {
-  list-style: none; margin: 0; padding: 0; display: grid; gap: v.$space-3;
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+  display: grid; 
+  gap: v.$space-2; /* ⬅️ moins d’écart entre items */
 
   li {
-    display: grid; grid-template-columns: auto 1fr; gap: v.$space-2;
-    align-items: start; padding: v.$space-3; border-radius: 10px;
-    background: lighten($bg, 2%); color: $text-secondary;
+    display: grid; 
+    grid-template-columns: auto 1fr; 
+    gap: v.$space-2;
+    align-items: start; 
+    padding: 8px 12px; /* ⬅️ padding réduit */
+    border-radius: 8px; /* ⬅️ un peu moins rond */
+    background: lighten($bg, 3%);
+    color: $text-secondary;
 
-    strong { color: $text-main; }
-    p { margin: 2px 0 0; opacity: .9; }
-    a { color: $text-main; text-decoration: underline; }
+    strong { 
+      color: $text-main; 
+      font-size: .95rem; 
+    }
+    p { 
+      margin: 2px 0 0; 
+      opacity: .9; 
+      font-size: .9rem; 
+      line-height: 1.4; 
+    }
+    a { 
+      color: $text-main; 
+      text-decoration: none; 
+      font-size: .9rem;
+    }
   }
 }
 
 .icon {
-  width: 36px; height: 36px; display: grid; place-items: center;
-  border-radius: 10px; background: rgba(v.$accent,.1); color: $text-main;
+  width: 30px; 
+  height: 30px;         /* ⬅️ icône plus petite */
+  display: grid; 
+  place-items: center;
+  border-radius: 8px; 
+  background: rgba(v.$accent,.1); 
+  color: $text-main;
+  font-size: 1rem;      /* ⬅️ taille emoji/icone réduite */
 }
 
-/* Formulaire – textarea collé en bas, grande hauteur par défaut */
-.formCard { display: flex; flex-direction: column; height: 100%; }
-
-.form { display: flex; flex-direction: column; gap: v.$space-3; flex: 1; }
+/* Formulaire */
+.form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: v.$space-3; 
+  flex: 1; 
+}
 
 .field {
-  display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;
+  display: flex; 
+  flex-direction: column; 
+  gap: 6px; 
+  flex-shrink: 0;
 
-  label { font-weight: 600; color: $text-main; }
+  label { 
+    font-weight: 600; 
+    color: $text-main; 
+  }
 
   input, textarea {
-    width: 100%; border: 1px solid rgba(0,0,0,.12); border-radius: 10px;
-    padding: 12px 14px; background: lighten($bg, 4%); color: $text-secondary;
+    width: 100%; 
+    border: 1px solid rgba(0,0,0,.12); 
+    border-radius: 10px;
+    padding: 12px 14px; 
+    background: lighten($bg, 4%); 
+    color: $text-secondary;
     outline: none;
   }
 
-  input:focus, textarea:focus { @include focus-ring(); background: #fff; }
+  select {
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: lighten($bg, 4%);
+  color: $text-secondary;
+  outline: none;
+  appearance: none; /* enlève le style par défaut */
+  font-family: inherit;
+  cursor: pointer;
+}
 
-  textarea {
-    flex: 1; min-height: 280px; height: 280px; resize: vertical; line-height: 1.6;
+select:focus {
+  @include focus-ring();
+  background: #fff;
+}
+
+
+  input:focus, textarea:focus { 
+    @include focus-ring(); 
+    background: #fff; 
+  }
+
+  textarea { 
+    flex: 1; /* zone extensible si besoin */
   }
 }
 
-.actions { margin-top: auto; display: flex; justify-content: center; padding-top: v.$space-2; }
+.actions { 
+  margin-top: auto; 
+  display: flex; 
+  justify-content: center; 
+  padding-top: v.$space-2; 
+}
 .submit  { @include btn; }
 
-/* Carte / Google Maps */
+/* Ancien mock (peut rester si besoin ailleurs) */
 .mapMock {
-  display: grid; place-items: center; gap: 10px; height: 220px;
-  border-radius: 10px; background: lighten($bg, 3%);
-  border: 1px dashed rgba(v.$accent,.25); text-align: center; color: $text-main;
+  display: grid; 
+  place-items: center; 
+  gap: 10px; 
+  height: 200px;
+  border-radius: 10px; 
+  background: lighten($bg, 3%);
+  border: 1px dashed rgba(v.$accent,.25); 
+  text-align: center; 
+  color: $text-main;
 
   p { margin: 0; font-weight: 600; }
 }
+
 .pin {
-  width: 44px; height: 44px; display: grid; place-items: center;
-  border-radius: 999px; background: #fff; border: 1px solid rgba(v.$accent,.3);
-  box-shadow: 0 6px 14px rgba(0,0,0,.08); font-size: 20px; color: $text-main;
+  width: 40px; 
+  height: 40px; 
+  display: grid; 
+  place-items: center;
+  border-radius: 999px; 
+  background: #fff; 
+  border: 1px solid rgba(v.$accent,.3);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08); 
+  font-size: 18px; 
+  color: $text-main;
 }
-.mapBtn { @include btn; background: rgba(v.$accent,.12); color: $text-main; box-shadow: none; }
+
+/* === Images de carte statiques === */
+.mapStatic {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,.15);
+  background: #e9ecef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 260px; /* cartes identiques, compactes */
+}
+
+.mapImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bouton sur la carte */
+.mapBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: v.$accent;
+  color: v.$accent-contrast;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+
+  &:hover {
+    background: lighten(v.$accent, 6%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(0,0,0,.3);
+  }
+}

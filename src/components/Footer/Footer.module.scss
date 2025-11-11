@@ -28,7 +28,6 @@
 }
 .brand { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
 
-/* scoped links (CSS Modules “pure selector”) */
 .footer a {
   color: v.$accent-contrast;
   text-decoration: none;
@@ -37,4 +36,18 @@
   transition: opacity .2s ease;
 
   &:hover { opacity: 1; text-decoration: underline; }
+}
+
+/* Centrage de la colonne centrale (adresse + téléphone) */
+.col:nth-child(2) {
+  text-align: center;
+
+  p {
+    margin: 4px 0;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 2px;
+  }
 }
