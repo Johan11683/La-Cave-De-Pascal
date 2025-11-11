@@ -45,7 +45,7 @@ export default function WhyUs() {
             <div>
               <h3>Conseil & excellence</h3>
               <p>
-                Notre mission : faire le lien entre la connaissance approfondie des domaines et vos envies, 
+                Notre mission : faire le lien entre la connaissance approfondie de nos domaines et vos envies, 
                 pour toujours trouver le vin juste au bon moment.
               </p>
             </div>

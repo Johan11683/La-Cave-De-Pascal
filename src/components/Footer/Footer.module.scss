@@ -1,6 +1,9 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
+/* =========================
+   Base
+========================= */
 .footer {
   background: v.$accent;
   color: v.$accent-contrast;
@@ -12,22 +15,29 @@
 .inner {
   @include container;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: v.$space-3;
   text-align: left;
-
-  @include md-down { flex-direction: column; text-align: center; gap: v.$space-2; }
 }
 
 .col {
-  flex: 1; min-width: 220px;
+  flex: 1;
+  min-width: 220px;
 
   p { margin: 4px 0; font-size: .95rem; opacity: .95; }
 }
-.brand { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* liens */
 .footer a {
   color: v.$accent-contrast;
   text-decoration: none;
@@ -38,16 +48,56 @@
   &:hover { opacity: 1; text-decoration: underline; }
 }
 
-/* Centrage de la colonne centrale (adresse + téléphone) */
+/* Colonne centrale (desktop) */
 .col:nth-child(2) {
   text-align: center;
 
-  p {
-    margin: 4px 0;
+  a { display: inline-block; margin-top: 2px; }
+}
+
+/* =========================
+   Responsive
+========================= */
+
+/* <=1440 */
+@include xl-down {
+  .footer { padding: v.$space-5 0; }
+}
+
+/* <=1024 : colonne, centrages, titre bien au centre */
+@include lg-down {
+  .inner { gap: v.$space-2; }
+
+  .brand {
+    justify-content: center;  /* centre horizontalement */
+    text-align: center;
+    width: 100%;
+  }
+}
+
+/* <=768 : pile tout proprement, titre sur 2 lignes si besoin */
+@include md2-down {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+    gap: v.$space-2;
   }
 
-  a {
-    display: inline-block;
-    margin-top: 2px;
+  .brand {
+    flex-direction: column;
+    gap: 4px;
   }
+
+  .col { min-width: 220px; }
+}
+
+/* <=425 : police un peu plus petite pour le titre */
+@include sm2-down {
+  .brand { font-size: 1rem; }
+  .col:nth-child(2) a { margin-top: 0; }
+}
+
+/* <=375 : garde une largeur minimale raisonnable */
+@include xs-down {
+  .col { min-width: 200px; }
 }

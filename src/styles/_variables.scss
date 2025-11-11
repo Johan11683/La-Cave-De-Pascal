@@ -27,3 +27,9 @@ $space-8: 60px;
 /* Breakpoints */
 $bp-md: 1024px;
 $bp-sm: 800px;
+/* Breakpoints additionnels (safe, non-cassants) */
+$bp-1440: 1440px;
+$bp-1024: 1024px; // alias explicite
+$bp-768:  768px;
+$bp-425:  425px;
+$bp-375:  375px;

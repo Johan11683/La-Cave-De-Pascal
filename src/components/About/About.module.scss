@@ -8,19 +8,15 @@
 
 /* ========= Layout en Flex (modulaire + centré) ========= */
 .inner {
-  /* ratios ajustables sans toucher au JSX */
-  --about-text: 0.55;   /* 55% texte */
-  --about-media: 0.45;  /* 45% images */
+  --about-text: 0.55;  /* 55% texte */
+  --about-media: 0.45; /* 45% images */
 
   @include container;
   display: flex;
   gap: v.$space-7;
-
-  /* centrage du bloc texte+images */
   justify-content: center;
   align-items: center;
 
-  /* largeur maxi + centrage */
   width: min(100% - 2rem, v.$container);
   margin-inline: auto;
 
@@ -46,7 +42,7 @@
 .media {
   flex: 1 1 calc(var(--about-media) * 100%);
   align-self: center;
-  min-width: 0; /* évite overflow en flex */
+  min-width: 0;
 
   @include md-down {
     flex-basis: 100%;
@@ -63,7 +59,6 @@
 
 .content {
   line-height: 1.75;
-
   p { margin: 0 0 v.$space-3; color: v.$text; }
   strong { color: v.$accent; }
 }
@@ -80,11 +75,11 @@
   }
 }
 
-/* Cartes uniformisées : indispensables pour Image fill */
+/* Cartes uniformisées */
 .card {
-  position: relative;       /* ✅ requis par <Image fill> */
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;    /* ✅ dimension stable */
+  aspect-ratio: 16 / 10;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
@@ -96,11 +91,59 @@
   }
 }
 
-.photo {
-  object-fit: cover;        /* couvre entièrement la carte */
-}
+.photo { object-fit: cover; }
 
-/* largeur max en mobile pour éviter l’effet géant */
+/* largeur max mobile */
 @include md-down {
   .card { max-width: 520px; width: 100%; }
 }
+
+/* ========= Responsive ========= */
+
+/* <=1440 : un peu plus d’air */
+@include xl-down {
+  .inner { gap: v.$space-6; }
+}
+
+/* <=1024 : images sous texte + titre centré */
+@include lg-down {
+  .about { padding: v.$space-7 0; }
+
+  /* ✅ centrage du titre */
+  .title {
+    text-align: center;
+    margin-bottom: v.$space-4;
+  }
+
+  /* ordre : texte avant images */
+  .textBlock { order: 1; }
+  .media     { order: 2; width: 100%; display: block; }
+
+  /* grille 2×2 */
+  .images {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: v.$space-2;
+    justify-items: stretch;
+  }
+
+  .card {
+    max-width: 100% !important;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 6px 16px rgba(0,0,0,.22);
+  }
+}
+
+/* <=768 : 2×2 plus compact */
+@include md2-down {
+  .about { padding: v.$space-5 0; }
+  .images { gap: v.$space-2; }
+  .card { aspect-ratio: 3 / 2; }
+}
+
+/* <=425 : cacher la galerie */
+@include sm2-down {
+  .media { display: none; }
+}
+
+/* <=375 : mini */
+@include xs-down {}

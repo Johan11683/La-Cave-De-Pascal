@@ -34,6 +34,13 @@
   box-shadow: 0 0 0 3px rgba($color, .18);
 }
 
-/* Media queries */
-@mixin md-down { @media (max-width: v.$bp-md) { @content; } }
-@mixin sm-down { @media (max-width: v.$bp-sm) { @content; } }
+/* Media queries — découplées des variables pour éviter les erreurs de build */
+@mixin xl-down  { @media (max-width: 1440px) { @content; } } // <=1440
+@mixin lg-down  { @media (max-width: 1024px) { @content; } } // <=1024
+@mixin md2-down { @media (max-width: 768px)  { @content; } } // <=768
+@mixin sm2-down { @media (max-width: 425px)  { @content; } } // <=425
+@mixin xs-down  { @media (max-width: 375px)  { @content; } } // <=375
+
+/* Compat avec ton code existant */
+@mixin md-down  { @media (max-width: 1024px) { @content; } } // alias ancien
+@mixin sm-down  { @media (max-width: 800px)  { @content; } } // alias ancien

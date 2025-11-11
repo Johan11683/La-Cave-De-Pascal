@@ -19,23 +19,90 @@
 
 .brand {
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 6px;
-  font-weight: 700; 
+  font-weight: 700;
   opacity: .95;
-  color : v.$accent-contrast;
+  color: v.$accent-contrast;
   font-size: clamp(1.5rem, 2vw, 1.4rem);
-
+  white-space: nowrap; /* pas de casse mot à mot */
 }
 
 .nav {
-  display: flex; justify-content: center; gap: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
 
-  a { 
-    color : v.$accent-contrast;
-    opacity: .9; transition: opacity .2s; }
-  a:hover { opacity: 1; }
+  a {
+    color: v.$accent-contrast;
+    opacity: .9;
+    transition: opacity .2s;
+  }
+
+  a:hover {
+    scale: 1.05;
+    opacity: 0.7;
+    transition: .3s;
+  }
 }
 
 .actions { display: flex; justify-content: end; }
-.cta { @include btn; padding: 10px 16px; border-radius: 999px; }
+
+.cta {
+  @include btn;
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  &:hover {
+    transform: translateY(-2px);
+    transition: .3s;
+    box-shadow: 0 12px 28px rgba(110, 35, 52, 0.5);
+  }
+}
+
+/* === Responsive (nav masquée <1024, CTA seul) === */
+
+/* <=1440 : micro-ajustement d’air */
+@include xl-down {
+  .nav { gap: 24px; }
+}
+
+/* <=1024 : on cache la nav, on centre brand + CTA sur 2 lignes */
+@include lg-down {
+  .nav { display: none !important; }
+
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto; /* 1) brand  2) CTA */
+    grid-template-areas:
+      "brand"
+      "actions";
+    justify-items: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .brand   { grid-area: brand; font-size: clamp(1.2rem, 3.6vw, 1.4rem); }
+  .actions { grid-area: actions; display: flex; justify-content: center; }
+  .cta     { padding: 9px 12px; font-size: .95rem; border-radius: 999px; }
+}
+
+/* <=768 : encore plus compact */
+@include md2-down {
+  .inner { gap: 6px; padding: 6px 0; }
+  .cta   { padding: 8px 10px; font-size: .9rem; }
+}
+
+/* <=425 : très ramassé */
+@include sm2-down {
+  .brand { font-size: clamp(1.05rem, 4.2vw, 1.2rem); }
+  .cta   { padding: 7px 10px; font-size: .9rem; }
+}
+
+/* <=375 : dernier cran */
+@include xs-down {
+  .inner { gap: 4px; padding: 4px 0; }
+  .brand { font-size: clamp(1rem, 4.8vw, 1.1rem); }
+  .cta   { padding: 6px 10px; font-size: .85rem; }
+}

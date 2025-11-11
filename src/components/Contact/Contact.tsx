@@ -36,7 +36,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>🕒</span>
               <div>
                 <strong>Horaires</strong>
-                <p>Mar–Sam : 9h30–13h00 / 15h–19h30 • Dim : 9h30–13h00</p>
+                <p>Lun : fermé<br />Mar–Sam : 9h30–13h00 / 15h–19h30<br />Dim : 9h30–13h00</p>
               </div>
             </li>
             <li>
@@ -75,7 +75,7 @@ export default function Contact() {
               <span className={s.icon} aria-hidden>🕒</span>
               <div>
                 <strong>Horaires</strong>
-                <p>Lun–Sam : 9h30–13h00 / 15h–19h30 • Dim : fermé</p>
+                <p>Lun–Sam : 9h30–13h00 / 15h–19h30<br />Dim : fermé</p>
               </div>
             </li>
             <li>

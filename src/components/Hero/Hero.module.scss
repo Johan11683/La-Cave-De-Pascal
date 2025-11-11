@@ -107,3 +107,34 @@
   strong { font-weight: 700; }
   span   { opacity: .9; font-size: .95rem; }
 }
+
+/* === Responsive === */
+
+/* <=1440 : léger resserrage vertical */
+@include xl-down {
+  .hero { min-height: 72vh; }
+}
+
+/* <=1024 */
+@include lg-down {
+  .content { padding: 44px 0 30px; }
+  .lead { max-width: 58ch; margin-bottom: 24px; }
+  .actions { gap: 12px; }
+}
+
+/* <=768 */
+@include md2-down {
+  .hero { min-height: 62vh; }
+  .content { padding: 36px 0 24px; }
+  .actions { gap: 10px; padding-inline: 6px; }
+}
+
+/* <=425 : boutons faciles à taper */
+@include sm2-down {
+  .btn { width: 100%; text-align: center; }
+}
+
+/* <=375 : texte + aéré */
+@include xs-down {
+  .lead { margin-bottom: 20px; }
+}

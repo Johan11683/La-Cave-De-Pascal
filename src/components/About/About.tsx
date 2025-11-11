@@ -26,7 +26,7 @@ export default function About() {
             </p>
 
             <p>
-              Que tu sois <strong>curieux pressé</strong> ou <strong>amateur éclairé</strong>, on s’adapte à ton envie du moment :
+              Que vous soyez <strong>curieux pressé</strong> ou <strong>amateur éclairé</strong>, on s’adapte à votre envie du moment :
               une <strong>bouteille pour l’apéro</strong>, un <strong>cadeau d’entreprise</strong> ou un
               <strong> grand cru pour une grande occasion</strong>. Ici, chacun trouve le vin qui lui ressemble.
             </p>
