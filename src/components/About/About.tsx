@@ -7,7 +7,7 @@ export default function About() {
       <div className={s.inner}>
         {/* Colonne texte */}
         <div className={s.textBlock}>
-          <h2 id="about-title" className={s.title}>Qui sommes-nous</h2>
+          <h2 id="about-title" className={s.title}>Les caves</h2>
 
           <div className={s.content}>
             <p>
@@ -21,7 +21,7 @@ export default function About() {
             <p>
               Ici, on privilégie les <strong>vignerons indépendants</strong> aux grandes marques,
               les <strong>rencontres humaines</strong> aux catalogues impersonnels.
-              Chaque cuvée est choisie <strong>directement chez le producteur</strong>,
+              La grande majorité de nos cuvées sont choisies <strong>directement chez le producteur</strong>,
               après dégustation, échange et conviction. On sélectionne avec soin, on conseille avec cœur.
             </p>
 

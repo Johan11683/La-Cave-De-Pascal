@@ -4,6 +4,8 @@
 /* ========= Section ========= */
 .about {
   padding: v.$space-8 0;
+   /* ✅ ancres avec header sticky */
+  scroll-margin-top: var(--header-height);
 }
 
 /* ========= Layout en Flex (modulaire + centré) ========= */
@@ -59,7 +61,7 @@
 
 .content {
   line-height: 1.75;
-  p { margin: 0 0 v.$space-3; color: v.$text; }
+  p { margin: 0 0 v.$space-3; color: v.$accent-contrast; }
   strong { color: v.$accent; }
 }
 

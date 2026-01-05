@@ -2,45 +2,47 @@
 @use '../../styles/variables' as v;
 
 /* Palette locale */
-$bg: lighten(v.$accent-contrast, 8%);  // ~#f3f3f3
 $text-main: v.$accent;
-$text-secondary: darken(v.$accent, 25%);
+$text-secondary: darken(v.$accent, 22%);
 
 .contact {
-  background: $bg;
-  padding: v.$space-8 0;
-  border-block: 1px solid rgba(0,0,0,.04);
+  background: v.$page-bg;
+  padding: clamp(90px, 10vw, 150px) 0;
+  border-block: 1px solid rgba(0, 0, 0, 0.04);
   color: $text-secondary;
+
+  /* ✅ ancres avec header sticky */
+  scroll-margin-top: var(--header-height);
 }
 
 .header {
   @include container;
   text-align: center;
-  margin-bottom: v.$space-4;
+  margin-bottom: clamp(18px, 2.2vw, 28px);
 
   h2 {
     margin: 0;
-    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
-    font-weight: 800;
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    font-weight: 650;
+    letter-spacing: 0.02em;
     color: $text-main;
-    text-shadow: 0 1px 3px rgba(0,0,0,.05);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
-  p { margin: 8px 0 0; opacity: .9; }
+  p {
+    margin: 10px 0 0;
+    color: v.$accent;
+    line-height: 1.7;
+  }
 }
 
-/* ===== Grille 2 colonnes =====
-   Desktop (>=1440): coords/coords puis map/map
-   <1440 : map au-dessus des coords (map/map puis coords/coords)
-   Mobile (<=768) : 1 colonne avec ordre map -> coords pour chaque cave
-*/
+/* ===== Grille 2 colonnes ===== */
 .grid {
   @include container;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: v.$space-4;
+  gap: clamp(18px, 2.2vw, 28px);
 
-  /* Desktop par défaut */
   grid-template-areas:
     "coords1 coords2"
     "map1    map2"
@@ -50,248 +52,274 @@ $text-secondary: darken(v.$accent, 25%);
     grid-template-columns: 1fr;
     grid-template-areas:
       "coords1"
-      "coords2"
       "map1"
+      "coords2"
       "map2"
       "form";
   }
 }
 
+/* ===== Cards ===== */
 .card {
   @include card;
-  padding: v.$space-4;
+
+  /* ✅ plus premium : bordure fine + ombre très douce */
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(110, 35, 52, 0.10);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.06);
+
+  padding: clamp(18px, 2vw, 26px);
   color: $text-secondary;
-  background: v.$card-bg;
+  border-radius: 20px;
 }
 
 .cardTitle {
-  margin: 0 0 v.$space-2;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: $text-main;
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: v.$page-bg;
 }
 
 /* Zones */
-.coords1 { grid-area: coords1; padding: 16px 20px; }
-.coords2 { grid-area: coords2; padding: 16px 20px; }
-.map1    { grid-area: map1; }
-.map2    { grid-area: map2; }
+.coords1 { grid-area: coords1; }
+.coords2 { grid-area: coords2; }
+.map1    { grid-area: map1; padding: 0; }
+.map2    { grid-area: map2; padding: 0; }
 
-.formCard{
+/* ✅ Form full width, centré, lisible */
+.formCard {
   grid-area: form;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+
+  padding: clamp(22px, 2.6vw, 34px);
 }
 
-/* Contenus coord. (plus compacts) */
+/* ===== Liste coordonnées (moins “UI”, plus “luxe”) ===== */
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
+
   display: grid;
-  gap: v.$space-2;
+  gap: 12px;
 
   li {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: v.$space-2;
+    gap: 12px;
     align-items: start;
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: lighten($bg, 3%);
-    color: $text-secondary;
 
-    strong { color: $text-main; font-size: .95rem; }
-    p { margin: 2px 0 0; opacity: .9; font-size: .9rem; line-height: 1.4; }
-    a { color: $text-main; text-decoration: none; font-size: .9rem; }
+    padding: 12px 12px;
+    border-radius: 14px;
+
+    /* ✅ au lieu d’un bloc gris : “papier” */
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(110, 35, 52, 0.08);
+
+    strong {
+      color: v.$page-bg;
+      font-size: 0.92rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 650;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: v.$page-bg;
+      opacity: 0.92;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    a {
+      color: v.$page-bg;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(110, 35, 52, 0.25);
+    }
+
+    a:hover {
+      border-bottom-color: rgba(110, 35, 52, 0.55);
+    }
   }
 }
 
+/* ✅ icônes plus discrètes (moins “pastel app”) */
 .icon {
-  width: 30px; height: 30px;
-  display: grid; place-items: center;
-  border-radius: 8px;
-  background: rgba(v.$accent,.1);
-  color: $text-main;
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 999px;
+  background: rgba(110, 35, 52, 0.08);
+  border: 1px solid rgba(110, 35, 52, 0.12);
+
+  color: v.$page-bg;
   font-size: 1rem;
 }
 
-/* Formulaire */
+/* ===== Formulaire ===== */
 .form {
   display: flex;
   flex-direction: column;
-  gap: v.$space-3;
+  gap: 16px;
   flex: 1;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   flex-shrink: 0;
 
-  label { font-weight: 600; color: $text-main; }
+  label {
+    font-weight: 650;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    color: v.$page-bg;
+  }
 
-  input, textarea {
+  input,
+  textarea,
+  select {
     width: 100%;
-    border: 1px solid rgba(0,0,0,.12);
-    border-radius: 10px;
+    border: 1px solid rgba(110, 35, 52, 0.14);
+    border-radius: 14px;
     padding: 12px 14px;
-    background: lighten($bg, 4%);
-    color: $text-secondary;
+
+    background: rgba(255, 255, 255, 0.60);
+    color: v.$page-bg;
     outline: none;
+
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
 
   select {
-    width: 100%;
-    border: 1px solid rgba(0,0,0,.12);
-    border-radius: 10px;
-    padding: 12px 14px;
-    background: lighten($bg, 4%);
-    color: $text-secondary;
-    outline: none;
     appearance: none;
     font-family: inherit;
     cursor: pointer;
   }
 
+  input:focus,
+  textarea:focus,
   select:focus {
     @include focus-ring();
-    background: #fff;
-  }
-
-  input:focus, textarea:focus {
-    @include focus-ring();
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(110, 35, 52, 0.30);
   }
 
   textarea { flex: 1; }
 }
 
 .actions {
-  margin-top: auto;
+  margin-top: 6px;
   display: flex;
   justify-content: center;
-  padding-top: v.$space-2;
-}
-.submit { @include btn; }
-
-/* Ancien mock */
-.mapMock {
-  display: grid; place-items: center; gap: 10px;
-  height: 200px;
-  border-radius: 10px;
-  background: lighten($bg, 3%);
-  border: 1px dashed rgba(v.$accent,.25);
-  text-align: center; color: $text-main;
-
-  p { margin: 0; font-weight: 600; }
 }
 
-.pin {
-  width: 40px; height: 40px; display: grid; place-items: center;
-  border-radius: 999px; background: #fff;
-  border: 1px solid rgba(v.$accent,.3);
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-  font-size: 18px; color: $text-main;
+.submit {
+  @include btn;
+  padding: 12px 18px;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  background-color: v.$page-bg;
+  text-transform: uppercase;
 }
 
-/* === Images de carte statiques === */
+/* ===== Maps statiques ===== */
 .mapStatic {
   position: relative;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 6px 14px rgba(0,0,0,.15);
+
   background: #e9ecef;
-  display: flex; justify-content: center; align-items: center;
-  height: 210px; /* compactes */
+
+  height: clamp(110px, 22vw, 140px);
+
+  /* ✅ ombre plus soft */
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.08);
 }
 
-.mapImg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mapImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 
-/* Bouton sur la carte */
+  /* ✅ luxe : on calme Google Maps */
+  filter: grayscale(0.65) saturate(0.85) contrast(1.05);
+  transform: scale(1.01);
+}
+
+.map2 .mapImg {
+  object-position: center 80%;
+}
+
+
+/* ✅ bouton plus discret et premium */
 .mapBtn {
-  position: absolute; right: 10px; bottom: 10px;
-  background: v.$accent; color: v.$accent-contrast;
-  padding: 8px 12px; border-radius: 8px; font-weight: 700;
-  text-decoration: none; font-size: 0.9rem;
-  box-shadow: 0 3px 8px rgba(0,0,0,.25);
-  transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
 
-  &:hover {
-    background: lighten(v.$accent, 6%);
-    transform: translateY(-1px);
-    box-shadow: 0 5px 12px rgba(0,0,0,.3);
-  }
+  background: rgba(110, 35, 52, 0.92);
+  color: #fff;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  font-weight: 650;
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-/* === Responsive === */
+.mapBtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
 
-/* <=1440 : alterne map/coords par colonne (map au-dessus) */
+/* ===== Responsive ===== */
+
 @include xl-down {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-    "coords1 coords2"
-      "map1    map2"
-      "form    form";
-  }
-
-  .card { padding: v.$space-3; }
-  .mapStatic { height: 230px; }
+  .mapStatic { height: clamp(220px, 26vw, 300px); }
 }
 
-/* <=1024 : deux colonnes, compact */
 @include lg-down {
-  .contact { padding: v.$space-7 0; }
-  .grid { gap: v.$space-3; }
-  .list li { padding: 8px 10px; gap: v.$space-2; }
-  .icon { width: 28px; height: 28px; font-size: .95rem; }
-  .mapStatic { height: 210px; }
+  .grid { gap: 18px; }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+  }
 }
 
-/* <=768 : 1 colonne – ordre map -> coords pour chaque cave */
 @include md2-down {
-  .grid {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "coords1"
-      "map1"
-      "coords2"
-      "map2"
-      "form";
-  }
-
-  .mapStatic { height: clamp(170px, 36vw, 200px); }
-  .mapBtn { padding: 7px 10px; font-size: .9rem; }
-
-  .form { gap: v.$space-2; }
-  .actions { padding-top: v.$space-2; }
+  .mapStatic { height: clamp(190px, 42vw, 240px); }
   .submit { width: 100%; }
 }
 
-/* <=425 : petits mais lisibles */
 @include sm2-down {
-  .cardTitle { font-size: 1rem; margin-bottom: v.$space-2; }
-
-  .list li {
-    padding: 6px 8px;
-    border-radius: 8px;
-    strong { font-size: .9rem; }
-    p, a { font-size: .85rem; }
-  }
-
-  .icon { width: 24px; height: 24px; font-size: .9rem; }
-  .mapStatic { height: clamp(140px, 42vw, 170px); }
+  .cardTitle { font-size: 0.95rem; }
+  .list li { padding: 10px 10px; border-radius: 12px; }
+  .mapBtn { padding: 9px 12px; font-size: 0.8rem; }
 }
 
-/* <=375 : encore plus compact */
 @include xs-down {
-  .list li {
-    gap: 8px;
-    strong { font-size: .88rem; }
-    p, a { font-size: .82rem; }
-  }
-  .mapStatic { height: clamp(130px, 44vw, 160px); }
+  .mapStatic { height: clamp(170px, 46vw, 220px); }
 }

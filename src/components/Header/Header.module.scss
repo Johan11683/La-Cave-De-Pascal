@@ -1,108 +1,333 @@
 @use '../../styles/mixins' as *;
 @use '../../styles/variables' as v;
 
-.header {
-  position: sticky; top: 0; z-index: 50;
-  backdrop-filter: blur(8px);
-  background: rgba(20,20,20,.6);
-  border-bottom: 1px solid v.$border;
+/* ===============================
+   Hauteurs du header
+   =============================== */
+:root {
+  --header-height: 76px;
 }
 
+/* ===============================
+   Header
+   =============================== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+
+  border-bottom: 1px solid rgba(110, 35, 52, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ===============================
+   Inner
+   =============================== */
 .inner {
   @include container;
+
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 20px;
+  padding: 0;
 }
 
+/* ===============================
+   Brand
+   =============================== */
 .brand {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  opacity: .95;
-  color: v.$accent-contrast;
-  font-size: clamp(1.5rem, 2vw, 1.4rem);
-  white-space: nowrap; /* pas de casse mot à mot */
+  gap: 10px;
+
+  color: v.$page-bg;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.96;
+
+  font-size: clamp(1.35rem, 1.8vw, 1.55rem);
+  white-space: nowrap;
 }
 
+/* ===============================
+   Navigation
+   =============================== */
 .nav {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 28px;
 
-  a {
-    color: v.$accent-contrast;
-    opacity: .9;
-    transition: opacity .2s;
-  }
-
-  a:hover {
-    scale: 1.05;
-    opacity: 0.7;
-    transition: .3s;
-  }
+  gap: 52px;
 }
 
-.actions { display: flex; justify-content: end; }
+.nav a {
+  position: relative;
 
+  color: v.$page-bg;
+  opacity: 0.95;
+
+  font-weight: 480;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  transition: opacity 0.25s ease;
+}
+
+/* underline ultra discret */
+.nav a::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -14px;
+
+  height: 0.5px;
+  background: rgba(110, 35, 52, 0.45);
+
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.nav a:hover { opacity: 1; }
+.nav a:hover::after { transform: scaleX(1); }
+
+/* ===============================
+   Actions
+   =============================== */
+.actions {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ===============================
+   CTA (sobre, premium)
+   =============================== */
 .cta {
   @include btn;
-  padding: 10px 16px;
+
+  padding: 10px 18px;
   border-radius: 999px;
 
-  &:hover {
-    transform: translateY(-2px);
-    transition: .3s;
-    box-shadow: 0 12px 28px rgba(110, 35, 52, 0.5);
-  }
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    rgba(110, 35, 52, 0.95),
+    rgba(75, 20, 35, 0.95)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 8px 20px rgba(110, 35, 52, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  transition: filter 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* === Responsive (nav masquée <1024, CTA seul) === */
+.cta:hover {
+  filter: brightness(1.05);
+  box-shadow:
+    0 12px 28px rgba(110, 35, 52, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
 
-/* <=1440 : micro-ajustement d’air */
+/* ===============================
+   Burger + mobile menu
+   =============================== */
+
+/* burger nu (pas de rond, pas de background) */
+.burger {
+  display: none; /* desktop */
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  display: none;
+  flex-direction: column;     /* ✅ empile les barres */
+  align-items: center;        /* centre horizontal */
+  justify-content: center;    /* centre vertical */
+}
+
+/* les 3 traits (vrai burger) */
+.burgerBar {
+  display: block;
+  width: 20px;               /* ✅ plus court = plus “burger” */
+  height: 2px;
+  border-radius: 999px;
+  background: v.$page-bg;     /* garde ta couleur */
+}
+
+/* espace entre les barres */
+.burgerBar + .burgerBar {
+  margin-top: 4px;
+}
+
+/* Accessibilité : focus visible */
+.burger:focus-visible {
+  outline: 2px solid rgba(110, 35, 52, 0.35);
+  outline-offset: 6px;
+  border-radius: 10px;
+}
+
+/* Overlay */
+.backdrop {
+  display: none;
+}
+
+/* Menu mobile */
+.mobileNav {
+  display: none;
+}
+
+/* ===============================
+   Responsive
+   =============================== */
+
 @include xl-down {
-  .nav { gap: 24px; }
+  .nav { gap: 44px; }
 }
 
-/* <=1024 : on cache la nav, on centre brand + CTA sur 2 lignes */
+/* <1024 : brand parfaitement centré + burger à droite */
 @include lg-down {
+  :root { --header-height: 76px; } /* 1 ligne premium */
+
   .nav { display: none !important; }
 
+  /* ✅ 3 colonnes équilibrées : vide | brand | burger */
   .inner {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto; /* 1) brand  2) CTA */
-    grid-template-areas:
-      "brand"
-      "actions";
-    justify-items: center;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 0;
+    grid-template-columns: 44px 1fr 44px;
+    gap: 0;
   }
 
-  .brand   { grid-area: brand; font-size: clamp(1.2rem, 3.6vw, 1.4rem); }
-  .actions { grid-area: actions; display: flex; justify-content: center; }
-  .cta     { padding: 9px 12px; font-size: .95rem; border-radius: 999px; }
+  /* slot gauche vide pour équilibrer le burger */
+  .inner::before {
+    content: '';
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand {
+    justify-self: center;
+    align-self: center;
+  }
+
+  .actions {
+    justify-self: end;
+    justify-content: end;
+    gap: 0;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  /* luxe : CTA cachée en mobile */
+  .cta {
+    display: none;
+  }
+
+  /* Overlay */
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 40;
+  }
+
+  .backdropOpen {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Panel menu (sous le header) */
+  .mobileNav {
+    display: grid;
+    gap: 14px;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--header-height);
+
+    padding: 18px 22px 22px;
+
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+
+    border-bottom: 1px solid rgba(110, 35, 52, 0.14);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.10);
+
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    z-index: 45;
+  }
+
+  .mobileNavOpen {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobileNav a {
+    color: v.$page-bg;
+    opacity: 0.95;
+
+    font-weight: 520;
+    font-size: 0.88rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    padding: 10px 6px;
+
+    transition: opacity 0.2s ease;
+  }
+
+  .mobileNav a:hover { opacity: 1; }
 }
 
-/* <=768 : encore plus compact */
-@include md2-down {
-  .inner { gap: 6px; padding: 6px 0; }
-  .cta   { padding: 8px 10px; font-size: .9rem; }
-}
-
-/* <=425 : très ramassé */
 @include sm2-down {
-  .brand { font-size: clamp(1.05rem, 4.2vw, 1.2rem); }
-  .cta   { padding: 7px 10px; font-size: .9rem; }
+  .brand {
+    font-size: clamp(1.1rem, 4.2vw, 1.25rem);
+  }
 }
 
-/* <=375 : dernier cran */
 @include xs-down {
-  .inner { gap: 4px; padding: 4px 0; }
-  .brand { font-size: clamp(1rem, 4.8vw, 1.1rem); }
-  .cta   { padding: 6px 10px; font-size: .85rem; }
+  .burger {
+    width: 40px;
+    height: 40px;
+  }
+
+  .burgerBar {
+    width: 18px;
+  }
 }

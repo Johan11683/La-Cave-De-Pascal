@@ -5,7 +5,8 @@
    Base
 ========================= */
 .footer {
-  background: v.$accent;
+  border-top: 1px solid v.$accent;
+  background: v.$page-bg;
   color: v.$accent-contrast;
   width: 100%;
   padding: v.$space-6 0;

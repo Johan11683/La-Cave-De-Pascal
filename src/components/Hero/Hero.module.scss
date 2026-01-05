@@ -4,137 +4,107 @@
 /* ===== Section ===== */
 .hero {
   position: relative;
-  min-height: 80vh;
-  display: grid;
-  place-items: center;
-  color: v.$accent-contrast;
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.68)),
-    url('/wine-bottles.jpg') center / cover no-repeat;
+   /* ✅ ancres avec header sticky */
+  scroll-margin-top: var(--header-height);
+
+  /* IMAGE HERO */
+  background-image: url('/wine-bottles.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* Overlay sombre et doux pour le contraste */
 .overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(70% 60% at 50% 20%, rgba(0,0,0,.18), transparent 60%);
-  pointer-events: none;
+  z-index: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.35)
+  );
 }
 
+/* Contenu central : plus large que le container, mais maîtrisé */
 .content {
-  @include container;
   position: relative;
   z-index: 1;
-  padding: 60px 0 40px;
-  text-align: center;
 
-  @include md-down { padding: 48px 0 32px; }
-}
-
-/* ===== Typo ===== */
-.title {
-  margin: 0 0 8px;
-  font-size: clamp(2.4rem, 5.6vw, 4.2rem);
-  line-height: 1.05;
-  text-shadow: 0 2px 24px rgba(0,0,0,.6);
-}
-
-.subtitle {
-  margin: 0 0 8px;
-  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-  opacity: .95;
-}
-
-.lead {
-  margin: 0 0 28px;
-  max-width: 60ch;
+  max-width: 1100px;
   margin-inline: auto;
-  opacity: .92;
+
+  padding-inline: clamp(24px, 6vw, 96px);
+  padding-block: clamp(80px, 14vh, 160px);
+
+  text-align: center;
 }
 
-/* ===== Actions (CTA) ===== */
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 36px;
+/* Titre principal */
+.title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 16px;
 }
 
-/* ✅ Style unique pour tous les boutons */
-.btn {
-  display: inline-block;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-weight: 700;
-  background: v.$accent;
-  color: v.$accent-contrast;
-  box-shadow: 0 10px 24px rgba(110, 35, 52, 0.4);
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Sous-titre */
+.subtitle {
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-weight: 400;
+  opacity: 0.9;
+  color: #fff;
+  margin-bottom: 28px;
+  position: relative;
+}
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(110, 35, 52, 0.5);
+/* Séparateur chic */
+.subtitle::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 1px;
+  margin: 24px auto 0;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Texte d’introduction */
+.lead {
+  max-width: 720px;
+  margin: 0 auto;
+
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.75;
+  opacity: 0.85;
+  color: #fff;
+}
+
+/* === Responsive ajustements === */
+
+@include md-down {
+  .content {
+    padding-block: clamp(64px, 12vh, 120px);
+  }
+
+  .title {
+    letter-spacing: 0.03em;
   }
 }
 
-/* ===== Ruban d’arguments ===== */
-.ribbon {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 40px;
-
-  @include md-down {
-    grid-template-columns: 1fr;
+@include sm-down {
+  .content {
+    padding-inline: 20px;
   }
-}
 
-.pill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 14px;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 12px;
-  background: rgba(255,255,255,.08);
-  color: v.$accent-contrast;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 8px 20px rgba(0,0,0,.25);
-
-  strong { font-weight: 700; }
-  span   { opacity: .9; font-size: .95rem; }
-}
-
-/* === Responsive === */
-
-/* <=1440 : léger resserrage vertical */
-@include xl-down {
-  .hero { min-height: 72vh; }
-}
-
-/* <=1024 */
-@include lg-down {
-  .content { padding: 44px 0 30px; }
-  .lead { max-width: 58ch; margin-bottom: 24px; }
-  .actions { gap: 12px; }
-}
-
-/* <=768 */
-@include md2-down {
-  .hero { min-height: 62vh; }
-  .content { padding: 36px 0 24px; }
-  .actions { gap: 10px; padding-inline: 6px; }
-}
-
-/* <=425 : boutons faciles à taper */
-@include sm2-down {
-  .btn { width: 100%; text-align: center; }
-}
-
-/* <=375 : texte + aéré */
-@include xs-down {
-  .lead { margin-bottom: 20px; }
+  .subtitle::after {
+    width: 48px;
+  }
 }

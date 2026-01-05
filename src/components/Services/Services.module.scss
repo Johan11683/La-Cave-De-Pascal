@@ -1,0 +1,165 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/variables' as v;
+
+.services {
+  padding: clamp(90px, 10vw, 150px) 0;
+  background: v.$page-bg;
+  color: v.$accent-contrast;
+}
+
+.inner {
+  @include container;
+}
+
+.head {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 52px;
+
+  display: grid;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: v.$accent;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.75;
+  color: v.$accent;
+}
+
+.list {
+  display: grid;
+  gap: clamp(8px, 3.2vw, 20px);
+}
+
+/* 1 service = 1 bloc premium */
+.item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(18px, 3vw, 34px);
+
+  padding: clamp(18px, 2.4vw, 28px);
+  border-radius: 8px;
+
+  background: v.$accent;
+  border: 1px solid rgba(110, 35, 52, 0.10);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.06);
+
+  overflow: hidden;
+}
+
+.reverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+.reverse .media {
+  order: 2;
+}
+
+.reverse .content {
+  order: 1;
+}
+
+.media {
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: clamp(240px, 26vw, 340px);
+  border-radius: 8px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* rendu “photo premium” */
+  filter: saturate(1.05) contrast(1.02);
+  transform: translateZ(0);
+}
+
+/* une petite ombre interne subtile (très luxe) */
+.image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.content {
+  display: grid;
+  gap: 12px;
+  padding: 6px 4px;
+}
+
+.itemTitle {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.5vw, 1.45rem);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: v.$page-bg;
+}
+
+.text {
+  margin: 0;
+  color: v.$text-muted;
+  line-height: 1.85;
+  font-size: 1rem;
+}
+
+.rule {
+  width: 72px;
+  height: 1px;
+  background: rgba(110, 35, 52, 0.35);
+  margin-top: 8px;
+}
+
+/* ===== Responsive ===== */
+
+@include lg-down {
+  .head {
+    margin-bottom: 42px;
+  }
+
+  .item {
+    grid-template-columns: 1fr;
+  }
+
+  .reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .reverse .media,
+  .reverse .content {
+    order: initial;
+  }
+
+  .image {
+    height: clamp(220px, 44vw, 320px);
+  }
+}
+
+@include sm2-down {
+  .head {
+    margin-bottom: 34px;
+  }
+
+  .item {
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .image {
+    border-radius: 8px;
+  }
+}
